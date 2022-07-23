@@ -1,0 +1,87 @@
+buildscript {
+    ext {
+        compose_version = '1.0.1'
+    }
+    repositories {
+        mavenCentral()
+        google()
+    }
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.1.1' apply false
+    id 'com.android.library' version '7.1.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.5.21' apply false
+//    id 'com.vanniktech.code.quality.tools' version '0.22.0'
+//    id "org.jlleitschuh.gradle.ktlint" version "10.0.0" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0" apply false
+}
+
+
+//codeQualityTools {
+//    boolean failEarly = true
+//    boolean xmlReports = true
+//    boolean htmlReports = false
+//    boolean textReports = false
+//    String[] ignoreProjects = []
+//
+//    checkstyle {
+//        boolean enabled = true
+//        String toolVersion = '8.6'
+//        String configFile = 'code_quality_tools/checkstyle.xml'
+//        Boolean ignoreFailures = null
+//        Boolean showViolations = null
+//        String source = 'src'
+//        List<String> include = ['**/*.java']
+//        List<String> exclude = ['**/gen/**']
+//    }
+//    pmd {
+//        boolean enabled = true
+//        String toolVersion = '6.0.0'
+//        String ruleSetFile = 'code_quality_tools/pmd.xml'
+//        Boolean ignoreFailures = null
+//        String source = 'src'
+//        List<String> include = ['**/*.java']
+//        List<String> exclude = ['**/gen/**']
+//    }
+//    lint {
+//        boolean enabled = true
+//        Boolean textReport = true
+//        String textOutput = 'stdout'
+//        Boolean abortOnError = null
+//        Boolean warningsAsErrors = null
+//        Boolean checkAllWarnings = null
+//        String baselineFileName = null
+//        Boolean absolutePaths = null
+//        File lintConfig = null
+//        Boolean checkReleaseBuilds = false
+//        Boolean checkTestSources = null
+//        Boolean checkDependencies = null
+//    }
+//    ktlint {
+//        boolean android = true
+//        boolean enabled = true
+//        String toolVersion = '0.36.0'
+//        boolean experimental = false
+//    }
+//    detekt {
+//        boolean enabled = true
+//        String toolVersion = '1.0.0'
+//        String config = 'code_quality_tools/detekt.yml'
+//        String baselineFileName = null
+//        boolean failFast = true
+//    }
+//    cpd {
+//        boolean enabled = true
+//        String source = 'src'
+//        String language = 'java'
+//        Boolean ignoreFailures = null
+//        int minimumTokenCount = 50
+//    }
+//    kotlin {
+//        boolean allWarningsAsErrors = true
+//    }
+//}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
