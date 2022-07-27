@@ -16,3 +16,4 @@ rootProject.name = "UdemyApp"
 include ':app'
 include ':view-model-compose-state'
 include ':profile-layout'
+include ':navigation-compose'
