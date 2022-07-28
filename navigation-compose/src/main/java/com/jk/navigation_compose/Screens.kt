@@ -1,6 +1,9 @@
 package com.jk.navigation_compose
 
+import android.Manifest
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -59,15 +62,13 @@ fun FeedScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val error = viewModel.puppyName.value.error
-
         TextField(
             value = viewModel.puppyName.value.text,
             onValueChange = viewModel::onPuppyNameEnter,
             modifier = Modifier.fillMaxWidth(),
-            isError = error != null,
+            isError = viewModel.puppyName.value.error != null,
             trailingIcon = {
-                if (error != null) {
+                if (viewModel.puppyName.value.error != null) {
                     Icon(
                         Icons.Default.Info,
                         viewModel.puppyName.value.error,
@@ -79,9 +80,9 @@ fun FeedScreen(
                 Text(text = "Enter a puppy name")
             }
         )
-        if (error != null) {
+        viewModel.puppyName.value.error?.let {
             Text(
-                text = error,
+                text = it,
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp)
@@ -97,8 +98,27 @@ fun FeedScreen(
 @Composable
 fun AdoptionScreen(
     name: String,
-    onNavigateUp: () -> Unit = {}
+    onNavigateUp: () -> Unit = {},
+    viewModel: PermissionViewModel = viewModel()
 ) {
+    val parmLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { perms ->
+            viewModel.onPermissionsResult(
+                acceptedAudioPermission = perms[Manifest.permission.RECORD_AUDIO] == true,
+                acceptedCameraPermission = perms[Manifest.permission.CAMERA] == true
+            )
+        }
+    )
+    LaunchedEffect(key1 = true) {
+        parmLauncher.launch(
+            arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA
+            )
+        )
+    }
+
     BackHandler {
         onNavigateUp()
     }
@@ -107,6 +127,10 @@ fun AdoptionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(name)
+        if (viewModel.hasAudioPermission.value && viewModel.hasCameraPermission.value) {
+            Text(name)
+        } else {
+            Text("permission not granted")
+        }
     }
 }

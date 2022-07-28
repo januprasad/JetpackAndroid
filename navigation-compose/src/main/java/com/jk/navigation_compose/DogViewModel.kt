@@ -13,6 +13,11 @@ class DogViewModel : ViewModel() {
     val puppyName: State<TextFieldState> = _puppyName
 
     fun onPuppyNameEnter(name: String) {
+        if (puppyName.value.text.isNotBlank() && _puppyName.value.error != null) {
+            _puppyName.value = puppyName.value.copy(
+                error = null
+            )
+        }
         _puppyName.value = puppyName.value.copy(
             text = name
         )
